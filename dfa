@@ -1,0 +1,65 @@
+START (accept) <- the start state
+    /: /
+    ": "
+    ': '
+    n: nA
+    EOF: End of File
+    other: START
+
+/ (accept)
+    *: Reject
+    /: /
+    ": "
+    ': '
+    n: nA
+    other: START
+
+Reject (reject)
+    *: *
+    n: nR
+    EOF: Error: line X: unterminated comment
+    other: Reject
+
+* (reject)
+    /: START
+    *: *
+    other: Reject
+
+nA (accept)
+    n: nA
+    other: START
+
+nR (reject)
+    n: nR
+    other: Reject
+
+" (accept)
+    n: n"
+    ": START
+    \: \"
+    other: "
+
+' (accept)
+    n: n'
+    ': START
+    \: \'
+    other: '
+
+n" (accept)
+    n: n"
+    other: "
+
+n' (accept)
+    n: n'
+    other: '
+
+\" (accept)
+    \: \"
+    n: n"
+    other: "
+
+\' (accept)
+    \: \'
+    n: n'
+    other: '
+
