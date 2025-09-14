@@ -1,4 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+int state_left_slash(void);
+int state_double_quote(void);
+int state_single_quote(void);
+int state_line_acc(void);
+int state_line_rej(void);
+int state_reject(void);
+int state_aster(void);
+int state_line_dquote(void);
+int state_line_squote(void);
+int slash_dquote(void);
+int slash_squote(void);
 
 int main(void)
 {
@@ -59,6 +72,8 @@ int state_left_slash(void)
             int_main();
             break;  
     }
+    return 0;
+
 }
 int state_double_quote(void)
 {
@@ -81,6 +96,8 @@ int state_double_quote(void)
             state_double_quote();
             break;  
     }
+    return 0;
+
 }
 
 int state_single_quote(void)
@@ -104,6 +121,8 @@ int state_single_quote(void)
             state_single_quote();
             break;  
     }
+    return 0;
+
 }
 int state_line_acc(void)
 {
@@ -119,6 +138,8 @@ int state_line_acc(void)
             int_main();
             break;  
     }
+    return 0;
+
 }
 int state_line_rej(void)
 {
@@ -134,6 +155,8 @@ int state_line_rej(void)
             state_reject();
             break;  
     }
+    return 0;
+
 }
 int state_reject(void)
 {
@@ -155,6 +178,8 @@ int state_reject(void)
             state_reject();
             break;  
     }
+    return 0;
+
 }
 int state_aster(void)
 {
@@ -172,6 +197,8 @@ int state_aster(void)
             state_reject();
             break;  
     }
+    return 0;
+
 }
 
 int state_line_dquote(void)
@@ -188,6 +215,8 @@ int state_line_dquote(void)
             state_double_quote();
             break;  
     }
+    return 0;
+
 }
 
 int state_line_squote(void)
@@ -204,6 +233,8 @@ int state_line_squote(void)
             state_single_quote();
             break;  
     }
+    return 0;
+
 }
 int slash_dquote(void)
 {
@@ -222,6 +253,8 @@ int slash_dquote(void)
             state_double_quote();
             break;  
     }
+    return 0;
+
 }
 int slash_squote(void)
 {
@@ -240,5 +273,7 @@ int slash_squote(void)
             state_single_quote();
             break;  
     }
+    return 0;
+
 }
 
