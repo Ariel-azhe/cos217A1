@@ -37,13 +37,15 @@ nR (reject)
     n: n"
     ": START
     \: \"
-    other: "
+    EOF: break;
+    other: " #print char
 
 ' (accept)
     n: n'
     ': START
     \: \'
-    other: '
+    EOF: break
+    other: ' # print char
 
 n" (accept)
     n: n"
@@ -62,4 +64,3 @@ n' (accept)
     \: \'
     n: n'
     other: '
-
