@@ -17,39 +17,41 @@ int slash_squote(void);
 int main(void)
 {
     /*printf("main() ");*/
-    char ch;
+    int ch;
     ch = getchar();
-    switch (ch)
+    if (ch != EOF)
     {
-        case '/':
-            state_left_slash();
-            break;
-        case '\"':
-            printf("\"");
-            state_double_quote();
-            break;
-        case '\'':
-            printf("\'");
-            state_single_quote();
-            break;
-        case '\n':
-            state_line_acc();
-            break;
-        case EOF:
-            exit(0);
-        default:
-            printf("%c", ch);
-            main();
-            break;
+        switch (ch)
+        {
+            case '/':
+                state_left_slash();
+                break;
+            case '\"':
+                printf("\"");
+                state_double_quote();
+                break;
+            case '\'':
+                printf("\'");
+                state_single_quote();
+                break;
+            case '\n':
+                state_line_acc();
+                break;
+            default:
+                putchar(ch);
+                main();
+                break;
     }
     return 0;
+}
 }
 
 int state_left_slash(void)
 {
     /*printf("state_left_slash() ");*/
-    char ch;
+    int ch;
     ch = getchar();
+    if (ch != EOF){
     switch(ch)
     {
         case '*':
@@ -62,32 +64,31 @@ int state_left_slash(void)
             break;
         case '\"':
             printf("\"");
-            /*state_double_quote();*/
             break;
         case '\'':
             printf("\'");
-            /*state_single_quote();*/
             break;
         case '\n':
             printf("//");
             state_line_acc();
             break;
-        case EOF:
-            exit(0);
         default:
             printf("//");
             printf("%c",ch);
             main();
             break;  
     }
+}
     return 0;
 
 }
+
 int state_double_quote(void)
 {
     /*printf("double_quote() ");*/
-    char ch;
+    int ch;
     ch = getchar();
+    if (ch != EOF){
     switch(ch)
     {
         case '\n':
@@ -100,13 +101,12 @@ int state_double_quote(void)
         case '\\':
             slash_dquote();
             break;
-        case EOF:
-            exit(0);
         default:
             printf("%c",ch);
             state_double_quote();
             break;  
     }
+}
     return 0;
 
 }
@@ -114,8 +114,10 @@ int state_double_quote(void)
 int state_single_quote(void)
 {
     /*printf("single_quote() ");*/
-    char ch;
+    int ch;
     ch = getchar();
+    if (ch != EOF)
+    {
     switch(ch)
     {
         case '\n':
@@ -125,25 +127,24 @@ int state_single_quote(void)
             printf("\'");
             main();
             break;
-        case EOF:
-            exit(0);
         case '\\':
             slash_squote();
             break;
         default:
-            printf("%c", ch);
+            putchar(ch);
             state_single_quote();
             break;  
     }
     return 0;
+}
 
 }
 int state_line_acc(void)
 {
     /*printf("line_acc() ");*/
-
-    char ch;
+    int ch;
     ch = getchar();
+    if (ch != EOF){
     switch(ch)
     {
         case '\n':
@@ -151,9 +152,6 @@ int state_line_acc(void)
             printf("\n");
             state_line_acc();
             break;
-        case EOF:
-            /*printf("ch is: %c",ch);*/
-            exit(0);
         default:
             /*printf("ch is: %c",ch);*/
             printf("\n");
@@ -161,6 +159,7 @@ int state_line_acc(void)
             main();
             break;  
     }
+}
     return 0;
 
 }
@@ -168,8 +167,9 @@ int state_line_rej(void)
 {
     /*printf("line_rej() ");*/
 
-    char ch;
+    int ch;
     ch = getchar();
+    if (ch != EOF){
     switch(ch)
     {
         case '\n':
@@ -184,6 +184,7 @@ int state_line_rej(void)
             state_reject();
             break;  
     }
+}
     return 0;
 
 }
@@ -191,7 +192,7 @@ int state_reject(void)
 {
     /*printf("reject() ");*/
 
-    char ch;
+    int ch;
     ch = getchar();
     switch(ch)
     {
@@ -216,7 +217,7 @@ int state_aster(void)
 {
     /*printf("aster() ");*/
 
-    char ch;
+    int ch;
     ch = getchar();
     switch(ch)
     {
@@ -243,22 +244,23 @@ int state_line_dquote(void)
 {
     /*printf("line_dquote() ");*/
 
-    char ch;
+    int ch;
     ch = getchar();
     printf("\n");
+    if (ch != EOF)
+    {
     switch(ch)
     {
         case '\n':
             printf("\n");
             state_line_dquote();
             break;
-        case EOF:
-            exit(0);
         default:
-            printf("%c", ch);
+            putchar(ch);
             state_double_quote();
             break;  
     }
+}
     return 0;
 
 }
@@ -268,21 +270,22 @@ int state_line_squote(void)
     /*printf("line_squote() ");*/
 
     printf("\n");
-    char ch;
+    int ch;
     ch = getchar();
+    if (ch != EOF)
+    {
     switch(ch)
     {
         case '\n':
             printf("\n");
             state_line_squote();
             break;
-        case EOF:
-            exit(0);
         default:
-            printf("%c", ch);
+            putchar(ch);
             state_single_quote();
             break;  
     }
+}
     return 0;
 
 }
@@ -291,8 +294,10 @@ int slash_dquote(void)
     /*printf("slash_dquote() ");*/
 
     printf("\\");
-    char ch;
+    int ch;
     ch = getchar();
+    if (ch != EOF)
+    {
     switch(ch)
     {
         case '\\':
@@ -301,12 +306,11 @@ int slash_dquote(void)
         case '\n':
             state_line_dquote();
             break;
-        case EOF:
-            exit(0);
         default:
             state_double_quote();
             break;  
     }
+}
     return 0;
 
 }
@@ -315,8 +319,10 @@ int slash_squote(void)
     /*printf("slash_squote() ");*/
 
     printf("\\");
-    char ch;
+    int ch;
     ch = getchar();
+    if (ch != EOF)
+    {
     switch(ch)
     {
         case '\\':
@@ -325,12 +331,11 @@ int slash_squote(void)
         case '\n':
             state_line_squote();
             break;
-        case EOF:
-            exit(0);
         default:
             state_single_quote();
             break;  
     }
+}
     return 0;
 
 }
