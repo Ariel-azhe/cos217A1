@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 int state_left_slash(void);
 int state_double_quote(void);
@@ -15,7 +16,8 @@ int slash_squote(void);
 
 int main(void)
 {
-    int ch;
+    //printf("main() ");
+    char ch;
     ch = getchar();
     switch (ch)
     {
@@ -23,19 +25,21 @@ int main(void)
             state_left_slash();
             break;
         case '\"':
+            printf("\"");
             state_double_quote();
             break;
         case '\'':
+            printf("\'");
             state_single_quote();
             break;
-        case 'n':
+        case '\n':
             state_line_acc();
             break;
         case EOF:
             break;
         default:
-            printf(ch);
-            int_main();
+            printf("%c", ch);
+            main();
             break;
     }
     return 0;
@@ -43,7 +47,8 @@ int main(void)
 
 int state_left_slash(void)
 {
-    int ch;
+    //printf("state_left_slash() ");
+    char ch;
     ch = getchar();
     switch(ch)
     {
@@ -56,20 +61,21 @@ int state_left_slash(void)
             state_left_slash();
             break;
         case '\"':
-            printf("/");
+            printf("\"");
             state_double_quote();
             break;
         case '\'':
-            printf("/");
+            printf("\'");
             state_single_quote();
             break;
-        case 'n':
+        case '\n':
             printf("/");
             state_line_acc();
             break;
         default:
             printf("/");
-            int_main();
+            printf("%c",ch);
+            main();
             break;  
     }
     return 0;
@@ -77,22 +83,25 @@ int state_left_slash(void)
 }
 int state_double_quote(void)
 {
-    printf("\"");
-    int ch;
+    //printf("double_quote() ");
+    char ch;
     ch = getchar();
     switch(ch)
     {
-        case 'n':
+        case '\n':
             state_line_dquote();
             break;
         case '\"':
             printf("\"");
-            int_main();
+            main();
             break;
         case '\\':
-            state_slash_dquote();
+            slash_dquote();
+            break;
+        case EOF:
             break;
         default:
+            printf("%c",ch);
             state_double_quote();
             break;  
     }
@@ -102,22 +111,25 @@ int state_double_quote(void)
 
 int state_single_quote(void)
 {
-    printf("\'");
-    int ch;
+    //printf("single_quote() ");
+    char ch;
     ch = getchar();
     switch(ch)
     {
-        case 'n':
+        case '\n':
             state_line_squote();
             break;
         case '\'':
             printf("\'");
-            int_main();
+            main();
+            break;
+        case EOF:
             break;
         case '\\':
-            state_slash_squote();
+            slash_squote();
             break;
         default:
+            printf("%c", ch);
             state_single_quote();
             break;  
     }
@@ -126,16 +138,25 @@ int state_single_quote(void)
 }
 int state_line_acc(void)
 {
-    printf("\n");
-    int ch;
+    //printf("line_acc() ");
+
+    char ch;
     ch = getchar();
     switch(ch)
     {
-        case 'n':
+        case '\n':
+            //printf("ch is: %c",ch);
+            printf("\n");
             state_line_acc();
             break;
+        case EOF:
+            //printf("ch is: %c",ch);
+            break;
         default:
-            int_main();
+            //printf("ch is: %c",ch);
+            printf("\n");
+            printf("%c",ch);
+            main();
             break;  
     }
     return 0;
@@ -143,15 +164,21 @@ int state_line_acc(void)
 }
 int state_line_rej(void)
 {
-    printf("\n");
-    int ch;
+    //printf("line_rej() ");
+
+    char ch;
     ch = getchar();
     switch(ch)
     {
-        case 'n':
+        case '\n':
+            printf("\n");
             state_line_rej();
             break;
+        case EOF:
+            fprintf(stderr, "Error: Line: %d: unterminated comment", __LINE__);
+            exit(EXIT_FAILURE);
         default:
+            printf("\n");
             state_reject();
             break;  
     }
@@ -160,20 +187,22 @@ int state_line_rej(void)
 }
 int state_reject(void)
 {
-    int ch;
+    //printf("reject() ");
+
+    char ch;
     ch = getchar();
     switch(ch)
     {
         case '*':
             state_aster();
             break;
-        case 'n':
+        case '\n':
             printf("\n");
             state_line_rej();
             break;
         case EOF:
-            printf("Error: Line: %d: unterminated comment", __LINE__);
-            break;
+            fprintf(stderr, "Error: Line: %d: unterminated comment", __LINE__);
+            exit(EXIT_FAILURE); 
         default:
             state_reject();
             break;  
@@ -183,35 +212,48 @@ int state_reject(void)
 }
 int state_aster(void)
 {
-    int ch;
+    //printf("aster() ");
+
+    char ch;
     ch = getchar();
     switch(ch)
     {
         case '/':
-            int_main();
+            //printf("%c",ch);
+            main();
             break;
         case '*':
             state_aster();
             break;
+        case EOF:
+            fprintf(stderr, "Error: Line: %d: unterminated comment", __LINE__);
+            exit(EXIT_FAILURE);
         default:
             state_reject();
-            break;  
+            break;
     }
     return 0;
+
 
 }
 
 int state_line_dquote(void)
 {
-    printf("\n");
-    int ch;
+    //printf("line_dquote() ");
+
+    char ch;
     ch = getchar();
+    printf("\n");
     switch(ch)
     {
-        case 'n':
+        case '\n':
+            printf("\n");
             state_line_dquote();
             break;
+        case EOF:
+            break;
         default:
+            printf("%c", ch);
             state_double_quote();
             break;  
     }
@@ -221,15 +263,21 @@ int state_line_dquote(void)
 
 int state_line_squote(void)
 {
+    //printf("line_squote() ");
+
     printf("\n");
-    int ch;
+    char ch;
     ch = getchar();
     switch(ch)
     {
-        case 'n':
+        case '\n':
+            printf("\n");
             state_line_squote();
             break;
+        case EOF:
+            break;
         default:
+            printf("%c", ch);
             state_single_quote();
             break;  
     }
@@ -238,15 +286,17 @@ int state_line_squote(void)
 }
 int slash_dquote(void)
 {
+    //printf("slash_dquote() ");
+
     printf("\\");
-    int ch;
+    char ch;
     ch = getchar();
     switch(ch)
     {
         case '\\':
-            state_slash_dquote();
+            slash_dquote();
             break;
-        case 'n':
+        case '\n':
             state_line_dquote();
             break;
         default:
@@ -258,15 +308,17 @@ int slash_dquote(void)
 }
 int slash_squote(void)
 {
+    //printf("slash_squote() ");
+
     printf("\\");
-    int ch;
+    char ch;
     ch = getchar();
     switch(ch)
     {
         case '\\':
             state_line_squote();
             break;
-        case 'n':
+        case '\n':
             state_line_squote();
             break;
         default:
