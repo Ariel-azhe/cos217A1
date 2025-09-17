@@ -57,25 +57,25 @@ int state_left_slash(void)
             state_reject();
             break;
         case '/':
-            printf("/");
+            printf("//");
             state_left_slash();
             break;
         case '\"':
             printf("\"");
-            state_double_quote();
+            /*state_double_quote();*/
             break;
         case '\'':
             printf("\'");
-            state_single_quote();
+            /*state_single_quote();*/
             break;
         case '\n':
-            printf("/");
+            printf("//");
             state_line_acc();
             break;
         case EOF:
             exit(0);
         default:
-            printf("/");
+            printf("//");
             printf("%c",ch);
             main();
             break;  
