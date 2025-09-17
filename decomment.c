@@ -16,7 +16,7 @@ int slash_squote(void);
 
 int main(void)
 {
-    //printf("main() ");
+    /*printf("main() ");*/
     char ch;
     ch = getchar();
     switch (ch)
@@ -47,7 +47,7 @@ int main(void)
 
 int state_left_slash(void)
 {
-    //printf("state_left_slash() ");
+    /*printf("state_left_slash() ");*/
     char ch;
     ch = getchar();
     switch(ch)
@@ -83,7 +83,7 @@ int state_left_slash(void)
 }
 int state_double_quote(void)
 {
-    //printf("double_quote() ");
+    /*printf("double_quote() ");*/
     char ch;
     ch = getchar();
     switch(ch)
@@ -111,7 +111,7 @@ int state_double_quote(void)
 
 int state_single_quote(void)
 {
-    //printf("single_quote() ");
+    /*printf("single_quote() ");*/
     char ch;
     ch = getchar();
     switch(ch)
@@ -138,22 +138,22 @@ int state_single_quote(void)
 }
 int state_line_acc(void)
 {
-    //printf("line_acc() ");
+    /*printf("line_acc() ");*/
 
     char ch;
     ch = getchar();
     switch(ch)
     {
         case '\n':
-            //printf("ch is: %c",ch);
+            /*printf("ch is: %c",ch);*/
             printf("\n");
             state_line_acc();
             break;
         case EOF:
-            //printf("ch is: %c",ch);
+            /*printf("ch is: %c",ch);*/
             break;
         default:
-            //printf("ch is: %c",ch);
+            /*printf("ch is: %c",ch);*/
             printf("\n");
             printf("%c",ch);
             main();
@@ -164,7 +164,7 @@ int state_line_acc(void)
 }
 int state_line_rej(void)
 {
-    //printf("line_rej() ");
+    /*printf("line_rej() ");*/
 
     char ch;
     ch = getchar();
@@ -187,7 +187,7 @@ int state_line_rej(void)
 }
 int state_reject(void)
 {
-    //printf("reject() ");
+    /*printf("reject() ");*/
 
     char ch;
     ch = getchar();
@@ -212,14 +212,14 @@ int state_reject(void)
 }
 int state_aster(void)
 {
-    //printf("aster() ");
+    /*printf("aster() ");*/
 
     char ch;
     ch = getchar();
     switch(ch)
     {
         case '/':
-            //printf("%c",ch);
+            /*printf("%c",ch);*/
             main();
             break;
         case '*':
@@ -239,7 +239,7 @@ int state_aster(void)
 
 int state_line_dquote(void)
 {
-    //printf("line_dquote() ");
+    /*printf("line_dquote() ");*/
 
     char ch;
     ch = getchar();
@@ -263,7 +263,7 @@ int state_line_dquote(void)
 
 int state_line_squote(void)
 {
-    //printf("line_squote() ");
+    /*printf("line_squote() ");*/
 
     printf("\n");
     char ch;
@@ -286,7 +286,7 @@ int state_line_squote(void)
 }
 int slash_dquote(void)
 {
-    //printf("slash_dquote() ");
+    /*printf("slash_dquote() ");*/
 
     printf("\\");
     char ch;
@@ -308,7 +308,7 @@ int slash_dquote(void)
 }
 int slash_squote(void)
 {
-    //printf("slash_squote() ");
+    /*printf("slash_squote() ");*/
 
     printf("\\");
     char ch;
