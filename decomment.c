@@ -36,7 +36,7 @@ int main(void)
             state_line_acc();
             break;
         case EOF:
-            break;
+            exit(0);
         default:
             printf("%c", ch);
             main();
@@ -72,6 +72,8 @@ int state_left_slash(void)
             printf("/");
             state_line_acc();
             break;
+        case EOF:
+            exit(0);
         default:
             printf("/");
             printf("%c",ch);
@@ -99,7 +101,7 @@ int state_double_quote(void)
             slash_dquote();
             break;
         case EOF:
-            break;
+            exit(0);
         default:
             printf("%c",ch);
             state_double_quote();
@@ -124,7 +126,7 @@ int state_single_quote(void)
             main();
             break;
         case EOF:
-            break;
+            exit(0);
         case '\\':
             slash_squote();
             break;
@@ -151,7 +153,7 @@ int state_line_acc(void)
             break;
         case EOF:
             /*printf("ch is: %c",ch);*/
-            break;
+            exit(0);
         default:
             /*printf("ch is: %c",ch);*/
             printf("\n");
@@ -251,7 +253,7 @@ int state_line_dquote(void)
             state_line_dquote();
             break;
         case EOF:
-            break;
+            exit(0);
         default:
             printf("%c", ch);
             state_double_quote();
@@ -275,7 +277,7 @@ int state_line_squote(void)
             state_line_squote();
             break;
         case EOF:
-            break;
+            exit(0);
         default:
             printf("%c", ch);
             state_single_quote();
@@ -299,6 +301,8 @@ int slash_dquote(void)
         case '\n':
             state_line_dquote();
             break;
+        case EOF:
+            exit(0);
         default:
             state_double_quote();
             break;  
@@ -321,6 +325,8 @@ int slash_squote(void)
         case '\n':
             state_line_squote();
             break;
+        case EOF:
+            exit(0);
         default:
             state_single_quote();
             break;  
