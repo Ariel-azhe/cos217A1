@@ -86,7 +86,9 @@ int state_left_slash(void)
             state_single_quote();
             break;
         case '\n':
-            printf("//\n");
+            printf("/");
+            printf("\n");
+            main();
             break;
         default:
             printf("/");
