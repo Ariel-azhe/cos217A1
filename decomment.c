@@ -218,6 +218,7 @@ int state_single_quote(void)
             break;
         case '\'':
             printf("\'");
+            printf("single quote closed");
             main();
             break;
         case '\\':
