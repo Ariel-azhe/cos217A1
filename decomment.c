@@ -48,8 +48,8 @@ int main(void)
                 main();
                 break;
         }
-    return 0;
     }
+    return 0;
 }
 
 int state_left_slash(void)
@@ -250,7 +250,6 @@ int state_line_acc(void)
             state_line_acc();
             break;
         default:
-            printf("ch is: %c",ch);
             printf("\n");
             printf("%c",ch);
             main();
