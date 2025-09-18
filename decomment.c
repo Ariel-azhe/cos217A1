@@ -26,6 +26,7 @@ int main(void)
     ch = getchar();
     if (ch == '\n')
     {
+        printf("new line");
         error_line=error_line+1;
     }
     if (ch != EOF)
@@ -33,6 +34,7 @@ int main(void)
         switch (ch)
         {
             case '/':
+                printf("left slash");
                 state_left_slash();
                 break;
             case '\"':
