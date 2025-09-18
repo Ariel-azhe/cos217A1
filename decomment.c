@@ -8,7 +8,6 @@ int state_single_quote(void);
 int state_reject(void);
 int state_aster(void);
 int state_line_dquote(void);
-int state_line_squote(void);
 int slash_dquote(void);
 int slash_squote(void);
 int escape_dquoted(void);
@@ -213,16 +212,16 @@ int state_single_quote(void)
     {
     switch(ch)
     {
+        case '\\':
+            escape_squoted();
+            break;
         case '\n':
-            state_line_squote();
+            putchar(ch);
             break;
         case '\'':
             printf("\'");
             printf("single quote closed");
             main();
-            break;
-        case '\\':
-            escape_squoted();
             break;
         default:
             putchar(ch);
@@ -366,35 +365,6 @@ int state_line_dquote(void)
         default:
             putchar(ch);
             state_double_quote();
-            break;  
-    }
-}
-    return 0;
-
-}
-
-int state_line_squote(void)
-{
-    int ch;
-    /*printf("line_squote() ");*/
-
-    printf("\n");
-    ch = getchar();
-    if (ch == '\n')
-    {
-        error_line=error_line+1;
-    }
-    if (ch != EOF)
-    {
-    switch(ch)
-    {
-        case '\n':
-            printf("\n");
-            state_line_squote();
-            break;
-        default:
-            putchar(ch);
-            state_single_quote();
             break;  
     }
 }
