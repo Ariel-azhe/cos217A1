@@ -63,6 +63,7 @@ int state_left_slash(void)
         case '*':
             printf(" ");
             state_reject();
+            printf("Error line is : %d", error_line);
             error_line = __LINE__;
             break;
         case '/':
@@ -166,7 +167,7 @@ int state_double_quote(void)
             main();
             break;
         case '\\':
-            slash_dquote();
+            escape_dquoted();
             break;
         default:
             printf("%c",ch);
@@ -195,7 +196,7 @@ int state_single_quote(void)
             main();
             break;
         case '\\':
-            slash_squote();
+            escape_squoted();
             break;
         default:
             putchar(ch);
@@ -211,7 +212,7 @@ int escape_squoted(void)
 {
     int ch;
     printf("\\");
-    printf("escape_squoted() ");
+    /*printf("escape_squoted() ");*/
     ch = getchar();
     if (ch != EOF){
     switch(ch)
