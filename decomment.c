@@ -211,7 +211,7 @@ int escape_squoted(void)
 {
     int ch;
     printf("\\");
-    /*printf("state_left_slash() ");*/
+    printf("escape_squoted() ");
     ch = getchar();
     if (ch != EOF){
     switch(ch)
