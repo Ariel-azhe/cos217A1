@@ -2,14 +2,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+int start_state(void);
 int state_left_slash(void);
 int state_double_quote(void);
 int state_single_quote(void);
 int state_reject(void);
 int state_aster(void);
-int state_line_dquote(void);
-int slash_dquote(void);
-int slash_squote(void);
 int escape_dquoted(void);
 int state_escape_slash(void);
 int escape_squoted(void);
