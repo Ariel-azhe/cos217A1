@@ -40,6 +40,7 @@ int main(void)
                 state_line_acc();
                 break;
             default:
+                printf("ch is: %c", ch);
                 putchar(ch);
                 main();
                 break;
@@ -245,7 +246,7 @@ int state_line_acc(void)
             state_line_acc();
             break;
         default:
-            /*printf("ch is: %c",ch);*/
+            printf("ch is: %c",ch);
             printf("\n");
             printf("%c",ch);
             main();
