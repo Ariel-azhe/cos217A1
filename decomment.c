@@ -22,8 +22,8 @@ int error_line = 0;
 
 int main(void)
 {
-    printf("main() ");
     char ch;
+    printf("main() ");
     ch = getchar();
     if (ch != EOF)
     {
