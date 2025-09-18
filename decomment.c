@@ -299,7 +299,7 @@ int state_reject(void)
 }
     else
     {
-        fprintf(stderr, "Error: Line: %d: unterminated comment", comment_start);
+        fprintf(stderr, "Error: line: %d: unterminated comment", comment_start);
         exit(EXIT_FAILURE); 
     }
     return 0;
@@ -338,7 +338,7 @@ int state_aster(void)
 }
     else 
     {
-        fprintf(stderr, "Error: Line: %d: unterminated comment", comment_start);
+        fprintf(stderr, "Error: line: %d: unterminated comment", comment_start);
         exit(EXIT_FAILURE);
     }
     return 0;
