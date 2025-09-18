@@ -28,6 +28,7 @@ int main(void)
     {
         /*printf("new line");*/
         error_line=error_line+1;
+        printf(error_line);
     }
     if (ch != EOF)
     {
@@ -63,6 +64,7 @@ int state_left_slash(void)
     if (ch == '\n')
     {
         error_line=error_line+1;
+        printf(error_line);
     }
     if (ch != EOF){
     switch(ch)
@@ -102,7 +104,7 @@ int state_left_slash(void)
 }
 else
     {
-        printf("\\");
+        printf("/");
     }
     return 0;
 
@@ -117,6 +119,7 @@ int state_escape_slash(void)
     if (ch == '\n')
     {
         error_line=error_line+1;
+        printf(error_line);
     }
     if (ch != EOF){
     switch(ch)
@@ -150,6 +153,7 @@ int escape_dquoted(void)
     if (ch == '\n')
     {
         error_line=error_line+1;
+        printf(error_line);
     }
     if (ch != EOF){
     switch(ch)
@@ -184,6 +188,7 @@ int state_double_quote(void)
     if (ch == '\n')
     {
         error_line=error_line+1;
+        printf(error_line);
     }
     if (ch != EOF){
     switch(ch)
@@ -213,6 +218,7 @@ int state_single_quote(void)
     if (ch == '\n')
     {
         error_line=error_line+1;
+        printf(error_line);
     }
     if (ch != EOF)
     {
@@ -245,6 +251,7 @@ int escape_squoted(void)
     if (ch == '\n')
     {
         error_line=error_line+1;
+        printf(error_line);
     }
     if (ch != EOF){
     switch(ch)
@@ -280,6 +287,7 @@ int state_reject(void)
     if (ch == '\n')
     {
         error_line=error_line+1;
+        printf(error_line);
     }
     if (ch != EOF)
     {
@@ -315,6 +323,7 @@ int state_aster(void)
     if (ch == '\n')
     {
         error_line=error_line+1;
+        printf(error_line);
     }
     if (ch != EOF)
     {
@@ -354,6 +363,7 @@ int state_line_dquote(void)
     if (ch == '\n')
     {
         error_line=error_line+1;
+        printf(error_line);
     }
     printf("\n");
     if (ch != EOF)
