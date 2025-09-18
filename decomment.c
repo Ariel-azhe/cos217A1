@@ -86,7 +86,7 @@ int state_left_slash(void)
             printf("//\n");
             break;
         default:
-            printf("//");
+            printf("/");
             printf("%c",ch);
             main();
             break;  
