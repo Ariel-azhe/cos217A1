@@ -326,7 +326,7 @@ int state_aster(void)
             state_aster();
             break;
         case '\n':
-            printf('\n');
+            putchar(ch);
             state_reject();
         default:
             state_reject();
