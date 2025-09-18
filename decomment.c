@@ -136,7 +136,7 @@ int escape_dquoted(void)
 {
     int ch;
     printf("\\");
-    printf("escape_dquoted() ");
+    /*printf("escape_dquoted() ");*/
     ch = getchar();
     if (ch == '\n')
     {
@@ -170,7 +170,7 @@ int escape_dquoted(void)
 int state_double_quote(void)
 {
     int ch;
-    printf("double_quote() ");
+    /*printf("double_quote() ");*/
     ch = getchar();
     if (ch == '\n')
     {
@@ -179,9 +179,6 @@ int state_double_quote(void)
     if (ch != EOF){
     switch(ch)
     {
-        case '\n':
-            state_line_dquote();
-            break;
         case '\"':
             printf("\"");
             main();
@@ -202,7 +199,7 @@ int state_double_quote(void)
 int state_single_quote(void)
 {
     int ch;
-    printf("single_quote() ");
+    /*printf("single_quote() ");*/
     ch = getchar();
     if (ch == '\n')
     {
@@ -215,13 +212,8 @@ int state_single_quote(void)
         case '\\':
             escape_squoted();
             break;
-        case '\n':
-            putchar(ch);
-            state_single_quote();
-            break;
         case '\'':
             printf("\'");
-            printf("single quote closed");
             main();
             break;
         default:
