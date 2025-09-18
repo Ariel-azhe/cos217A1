@@ -17,6 +17,7 @@ int escape_squoted(void);
 
 
 int error_line = 0;
+int comment_start = 0;
 /*int comment_line = 0;*/
 
 int main(void)
@@ -24,6 +25,10 @@ int main(void)
     int ch;
     /*printf("main() ");*/
     ch = getchar();
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     if (ch != EOF)
     {
         switch (ch)
@@ -50,16 +55,21 @@ int main(void)
 
 int state_left_slash(void)
 {
+    
     int ch;
     /*printf("state_left_slash() ");*/
     ch = getchar();
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     if (ch != EOF){
     switch(ch)
     {
         case '*':
             printf(" ");
             state_reject();
-            error_line = __LINE__;
+            comment_start = error_line;
             /*printf("Error line is : %d", error_line);*/
             break;
         case '/':
@@ -92,6 +102,10 @@ int state_escape_slash(void)
     printf("\\");
     /*printf("state_left_slash() ");*/
     ch = getchar();
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     if (ch != EOF){
     switch(ch)
     {
@@ -121,6 +135,10 @@ int escape_dquoted(void)
     printf("\\");
     /*printf("state_left_slash() ");*/
     ch = getchar();
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     if (ch != EOF){
     switch(ch)
     {
@@ -151,6 +169,10 @@ int state_double_quote(void)
     int ch;
     /*printf("double_quote() ");*/
     ch = getchar();
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     if (ch != EOF){
     switch(ch)
     {
@@ -179,6 +201,10 @@ int state_single_quote(void)
     int ch;
     /*printf("single_quote() ");*/
     ch = getchar();
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     if (ch != EOF)
     {
     switch(ch)
@@ -207,6 +233,10 @@ int escape_squoted(void)
 {
     int ch;
     printf("\\");
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     /*printf("escape_squoted() ");*/
     ch = getchar();
     if (ch != EOF){
@@ -240,6 +270,10 @@ int state_reject(void)
 
     /*printf("reject() ");*/
     ch = getchar();
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     if (ch != EOF)
     {
     switch(ch)
@@ -258,7 +292,7 @@ int state_reject(void)
 }
     else
     {
-        fprintf(stderr, "Error: Line: %d: unterminated comment", error_line);
+        fprintf(stderr, "Error: Line: %d: unterminated comment", comment_start);
         exit(EXIT_FAILURE); 
     }
     return 0;
@@ -268,6 +302,10 @@ int state_reject(void)
 int state_aster(void)
 {
     int ch;
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     /*printf("aster() ");*/
     ch = getchar();
     if (ch != EOF)
@@ -288,7 +326,7 @@ int state_aster(void)
 }
     else 
     {
-        fprintf(stderr, "Error: Line: %d: unterminated comment", error_line);
+        fprintf(stderr, "Error: Line: %d: unterminated comment", comment_start);
         exit(EXIT_FAILURE);
     }
     return 0;
@@ -301,6 +339,10 @@ int state_line_dquote(void)
     int ch;
     /*printf("line_dquote() ");*/
     ch = getchar();
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     printf("\n");
     if (ch != EOF)
     {
@@ -327,6 +369,10 @@ int state_line_squote(void)
 
     printf("\n");
     ch = getchar();
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     if (ch != EOF)
     {
     switch(ch)
@@ -351,6 +397,10 @@ int slash_dquote(void)
 
     printf("\\");
     ch = getchar();
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     if (ch != EOF)
     {
     switch(ch)
@@ -376,6 +426,10 @@ int slash_squote(void)
 
     printf("\\");
     ch = getchar();
+    if (ch == '\n')
+    {
+        error_line=error_line+1;
+    }
     if (ch != EOF)
     {
     switch(ch)
