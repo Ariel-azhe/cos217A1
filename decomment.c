@@ -71,8 +71,8 @@ int state_left_slash(void)
     {
         case '*':
             printf(" ");
-            state_reject();
             comment_start = error_line;
+            state_reject();
             /*printf("Error line is : %d", error_line);*/
             break;
         case '/':
