@@ -6,7 +6,6 @@ int state_left_slash(void);
 int state_double_quote(void);
 int state_single_quote(void);
 int state_line_acc(void);
-int state_line_rej(void);
 int state_reject(void);
 int state_aster(void);
 int state_line_dquote(void);
@@ -14,9 +13,12 @@ int state_line_squote(void);
 int slash_dquote(void);
 int slash_squote(void);
 
+int error_line = 0;
+/*int comment_line = 0;*/
+
 int main(void)
 {
-    /*printf("main() ");*/
+    printf("main() ");
     int ch;
     ch = getchar();
     if (ch != EOF)
@@ -57,6 +59,7 @@ int state_left_slash(void)
         case '*':
             printf(" ");
             state_reject();
+            error_line = __LINE__;
             break;
         case '/':
             printf("//");
@@ -82,6 +85,66 @@ int state_left_slash(void)
     return 0;
 
 }
+
+int state_escape_slash(void)
+{
+    print("\\");
+    /*printf("state_left_slash() ");*/
+    int ch;
+    ch = getchar();
+    if (ch != EOF){
+    switch(ch)
+    {
+        case '\'':
+            printf("\'");
+            main();
+            break;
+        case '\"':
+            printf("\"");
+            main();
+            break;
+        case '\\':
+            printf("\\");
+            main();
+            break;
+        default:
+            main();
+            break;  
+    }
+}
+    return 0;
+}
+
+int escape_dquoted(void)
+{
+    print("\\");
+    /*printf("state_left_slash() ");*/
+    int ch;
+    ch = getchar();
+    if (ch != EOF){
+    switch(ch)
+    {
+        case '\'':
+            printf("\'");
+            state_double_quote();
+            break;
+        case '\"':
+            printf("\"");
+            state_double_quote();
+            break;
+        case '\\':
+            printf("\\");
+            state_double_quote();
+            break;
+        default:
+            state_double_quote();
+            break;  
+    }
+}
+    return 0;
+}
+
+
 
 int state_double_quote(void)
 {
@@ -137,11 +200,40 @@ int state_single_quote(void)
     }
     return 0;
 }
-
 }
+int escape_squoted(void)
+{
+    print("\\");
+    /*printf("state_left_slash() ");*/
+    int ch;
+    ch = getchar();
+    if (ch != EOF){
+    switch(ch)
+    {
+        case '\'':
+            printf("\'");
+            state_single_quote();
+            break;
+        case '\"':
+            printf("\"");
+            state_single_quote();
+            break;
+        case '\\':
+            printf("\\");
+            state_single_quote();
+            break;
+        default:
+            state_single_quote();
+            break;  
+    }
+    }
+    return 0;
+}
+
+
 int state_line_acc(void)
 {
-    /*printf("line_acc() ");*/
+    printf("line_acc() ");
     int ch;
     ch = getchar();
     if (ch != EOF){
@@ -163,37 +255,15 @@ int state_line_acc(void)
     return 0;
 
 }
-int state_line_rej(void)
-{
-    /*printf("line_rej() ");*/
 
-    int ch;
-    ch = getchar();
-    if (ch != EOF){
-    switch(ch)
-    {
-        case '\n':
-            printf("\n");
-            state_line_rej();
-            break;
-        case EOF:
-            fprintf(stderr, "Error: Line: %d: unterminated comment", __LINE__);
-            exit(EXIT_FAILURE);
-        default:
-            printf("\n");
-            state_reject();
-            break;  
-    }
-}
-    return 0;
-
-}
 int state_reject(void)
 {
     /*printf("reject() ");*/
 
     int ch;
     ch = getchar();
+    if (ch != EOF)
+    {
     switch(ch)
     {
         case '*':
@@ -201,24 +271,30 @@ int state_reject(void)
             break;
         case '\n':
             printf("\n");
-            state_line_rej();
+            state_reject();
             break;
-        case EOF:
-            fprintf(stderr, "Error: Line: %d: unterminated comment", __LINE__);
-            exit(EXIT_FAILURE); 
         default:
             state_reject();
             break;  
     }
+}
+    else
+    {
+        fprintf(stderr, "Error: Line: %d: unterminated comment", error_line);
+        exit(EXIT_FAILURE); 
+    }
     return 0;
 
 }
+
 int state_aster(void)
 {
     /*printf("aster() ");*/
 
     int ch;
     ch = getchar();
+    if (ch != EOF)
+    {
     switch(ch)
     {
         case '/':
@@ -228,12 +304,15 @@ int state_aster(void)
         case '*':
             state_aster();
             break;
-        case EOF:
-            fprintf(stderr, "Error: Line: %d: unterminated comment", __LINE__);
-            exit(EXIT_FAILURE);
         default:
             state_reject();
             break;
+    }
+}
+    else 
+    {
+        fprintf(stderr, "Error: Line: %d: unterminated comment", error_line);
+        exit(EXIT_FAILURE);
     }
     return 0;
 
