@@ -231,7 +231,7 @@ int escape_squoted(void)
     int ch;
     printf("\\");
     
-    printf("escape_squoted() ");
+    /*printf("escape_squoted() ");*/
     ch = getchar();
     if (ch == '\n')
     {
