@@ -137,7 +137,7 @@ int escape_dquoted(void)
 {
     int ch;
     printf("\\");
-    /*printf("state_left_slash() ");*/
+    printf("escape_dquoted() ");
     ch = getchar();
     if (ch == '\n')
     {
@@ -171,7 +171,7 @@ int escape_dquoted(void)
 int state_double_quote(void)
 {
     int ch;
-    /*printf("double_quote() ");*/
+    printf("double_quote() ");
     ch = getchar();
     if (ch == '\n')
     {
@@ -203,7 +203,7 @@ int state_double_quote(void)
 int state_single_quote(void)
 {
     int ch;
-    /*printf("single_quote() ");*/
+    printf("single_quote() ");
     ch = getchar();
     if (ch == '\n')
     {
@@ -238,7 +238,7 @@ int escape_squoted(void)
     int ch;
     printf("\\");
     
-    /*printf("escape_squoted() ");*/
+    printf("escape_squoted() ");
     ch = getchar();
     if (ch == '\n')
     {
@@ -325,6 +325,9 @@ int state_aster(void)
         case '*':
             state_aster();
             break;
+        case '\n':
+            printf('\n');
+            state_reject();
         default:
             state_reject();
             break;
