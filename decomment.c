@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 int start_state(void);
 int state_left_slash(void);
@@ -12,8 +11,9 @@ int escape_dquoted(void);
 int state_escape_slash(void);
 int escape_squoted(void);
 
-
+/*keeps track of the current line number*/
 int error_line = 1;
+/*keeps track of the line a comment started on*/
 int comment_start = 0;
 
 /*takes no argument; automatically called at start of program
