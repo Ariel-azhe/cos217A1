@@ -1,66 +1,48 @@
-START (accept) <- the start state
-    /: /
-    ": "
-    ': '
-    n: nA
+start_state (accept) <- the start state
+    /: state_left_slash ()
+    ": state_double_quote
+    ': state_single_quote
     EOF: End of File
-    other: START
+    other: start_state
 
-/ (accept)
-    *: Reject
-    /: /
-    ": "
-    ': '
-    n: nA
-    other: START
+state_left_slash (accept)
+    *: state_reject
+    /: state_left_slash
+    ": state_double_quote
+    ': state_single_quote
+    other: start_state
 
-Reject (reject)
-    *: *
-    n: nR
-    EOF: Error: line X: unterminated comment
-    other: Reject
+state_reject (reject)
+    *: state_aster
+    \n: state_reject
+    EOF: Error: line %d: unterminated comment\n
+    other: state_reject
 
-* (reject)
-    /: START
-    *: *
-    other: Reject
+escape_dquoted(accept)
+    ": state_double_quote
+    ': state_double_quote
+    \: state_double_quote
+    other: state_double_quote
 
-nA (accept)
-    n: nA
-    other: START
+escape_squoted(accept)
+    ": state_single_quote
+    ': state_single_quote
+    \: state_single_quote
+    other: state_single_quote
 
-nR (reject)
-    n: nR
-    other: Reject
+state_aster (reject)
+    /: start_state
+    *: state_aster
+    other: state_reject
 
-" (accept)
-    n: n"
-    ": START
-    \: \"
+state_double_quote (accept)
+    ": start_state
+    \: escape_dquoted
     EOF: break;
-    other: " #print char
+    other: state_double_quote (print char)
 
-' (accept)
-    n: n'
-    ': START
-    \: \'
+state_single_quote (accept)
+    ': start_state
+    \: escape_squoted
     EOF: break
-    other: ' # print char
-
-n" (accept)
-    n: n"
-    other: "
-
-n' (accept)
-    n: n'
-    other: '
-
-\" (accept)
-    \: \"
-    n: n"
-    other: "
-
-\' (accept)
-    \: \'
-    n: n'
-    other: '
+    other: state_single_quote (print char)
