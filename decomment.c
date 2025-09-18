@@ -23,7 +23,7 @@ int error_line = 0;
 int main(void)
 {
     printf("main() ");
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF)
     {
@@ -56,7 +56,7 @@ int main(void)
 int state_left_slash(void)
 {
     /*printf("state_left_slash() ");*/
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF){
     switch(ch)
@@ -95,7 +95,7 @@ int state_escape_slash(void)
 {
     printf("\\");
     /*printf("state_left_slash() ");*/
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF){
     switch(ch)
@@ -124,7 +124,7 @@ int escape_dquoted(void)
 {
     printf("\\");
     /*printf("state_left_slash() ");*/
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF){
     switch(ch)
@@ -154,7 +154,7 @@ int escape_dquoted(void)
 int state_double_quote(void)
 {
     /*printf("double_quote() ");*/
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF){
     switch(ch)
@@ -182,7 +182,7 @@ int state_double_quote(void)
 int state_single_quote(void)
 {
     /*printf("single_quote() ");*/
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF)
     {
@@ -212,7 +212,7 @@ int escape_squoted(void)
 {
     printf("\\");
     /*printf("state_left_slash() ");*/
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF){
     switch(ch)
@@ -241,7 +241,7 @@ int escape_squoted(void)
 int state_line_acc(void)
 {
     printf("line_acc() ");
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF){
     switch(ch)
@@ -267,7 +267,7 @@ int state_reject(void)
 {
     /*printf("reject() ");*/
 
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF)
     {
@@ -298,7 +298,7 @@ int state_aster(void)
 {
     /*printf("aster() ");*/
 
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF)
     {
@@ -330,7 +330,7 @@ int state_line_dquote(void)
 {
     /*printf("line_dquote() ");*/
 
-    int ch;
+    char ch;
     ch = getchar();
     printf("\n");
     if (ch != EOF)
@@ -356,7 +356,7 @@ int state_line_squote(void)
     /*printf("line_squote() ");*/
 
     printf("\n");
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF)
     {
@@ -380,7 +380,7 @@ int slash_dquote(void)
     /*printf("slash_dquote() ");*/
 
     printf("\\");
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF)
     {
@@ -405,7 +405,7 @@ int slash_squote(void)
     /*printf("slash_squote() ");*/
 
     printf("\\");
-    int ch;
+    char ch;
     ch = getchar();
     if (ch != EOF)
     {
