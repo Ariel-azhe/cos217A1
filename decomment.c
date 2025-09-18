@@ -73,7 +73,7 @@ int state_left_slash(void)
             /*printf("Error line is : %d", error_line);*/
             break;
         case '/':
-            printf("//");
+            printf("/");
             state_left_slash();
             break;
         case '\"':
@@ -392,62 +392,3 @@ int state_line_squote(void)
     return 0;
 
 }
-int slash_dquote(void)
-{
-    int ch;
-    /*printf("slash_dquote() ");*/
-
-    printf("\\");
-    ch = getchar();
-    if (ch == '\n')
-    {
-        error_line=error_line+1;
-    }
-    if (ch != EOF)
-    {
-    switch(ch)
-    {
-        case '\\':
-            slash_dquote();
-            break;
-        case '\n':
-            state_line_dquote();
-            break;
-        default:
-            state_double_quote();
-            break;  
-    }
-}
-    return 0;
-
-}
-int slash_squote(void)
-{
-    int ch;
-    /*printf("slash_squote() ");*/
-
-    printf("\\");
-    ch = getchar();
-    if (ch == '\n')
-    {
-        error_line=error_line+1;
-    }
-    if (ch != EOF)
-    {
-    switch(ch)
-    {
-        case '\\':
-            state_line_squote();
-            break;
-        case '\n':
-            state_line_squote();
-            break;
-        default:
-            state_single_quote();
-            break;  
-    }
-}
-    return 0;
-
-}
-
