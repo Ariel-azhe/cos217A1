@@ -77,11 +77,13 @@ int state_left_slash(void)
             state_left_slash();
             break;
         case '\"':
-            printf("/\"");
+            printf("/");
+            printf("\"");
             state_double_quote();
             break;
         case '\'':
-            printf("/\'");
+            printf("/");
+            printf("\'");
             state_single_quote();
             break;
         case '\n':
