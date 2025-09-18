@@ -19,12 +19,18 @@ int error_line = 1;
 int comment_start = 0;
 /*int comment_line = 0;*/
 
+/*takes no argument; automatically called at start of program
+calls the start_state function to begin the DFA calls*/
 int main(void)
 {
     start_state();
     return 0;
 }
 
+/*gets the next character from input.
+If at end of file, end program; otherwise, 
+enter corresponding states if next char
+is /, ", or ', and print all other chars as they are  */
 int start_state(void)
 {
     int ch;
@@ -59,7 +65,11 @@ int start_state(void)
     }
     return 0;
 }
-
+/*Gets the next character from input.
+Previous char is /. 
+Enter corresponding states if next char is 
+*, /, ", or ', otherwise, print next char as it is
+and return to start_state*/
 int state_left_slash(void)
 {
     
@@ -113,7 +123,10 @@ else
     return 0;
 
 }
-
+/*Gets the next character from input.
+Previous char is \.
+Print literal value of next char if it is a special char; 
+and return to start_state*/
 int state_escape_slash(void)
 {
     int ch;
@@ -147,6 +160,10 @@ int state_escape_slash(void)
     return 0;
 }
 
+/*Gets next char from input.
+Previous char is \ and in comment.
+Print literal value of next char if it is a special char; 
+and return to double quoted comment state*/ 
 int escape_dquoted(void)
 {
     int ch;
@@ -181,7 +198,10 @@ int escape_dquoted(void)
 }
 
 
-
+/*Gets next char from input.
+Inside double quoted comment
+Enter corresponding states if next char
+is \ or ", otherwise, print next char to output*/
 int state_double_quote(void)
 {
     int ch;
@@ -208,9 +228,12 @@ int state_double_quote(void)
     }
 }
     return 0;
-
 }
 
+/*Gets next char from input.
+Inside single quoted comment
+Enter corresponding states if next char
+is \ or ", otherwise, print next char to output*/
 int state_single_quote(void)
 {
     int ch;
@@ -238,9 +261,12 @@ int state_single_quote(void)
     }
 }
 return 0;
-
 }
 
+/*Gets next char from input.
+Previous char is \ and in comment.
+Print literal value of next char if it is a special char; 
+and return to single quoted comment*/  
 int escape_squoted(void)
 {
     int ch;
@@ -276,7 +302,10 @@ int escape_squoted(void)
 }
 
 
-
+/*Get next char from input.
+Unless comment terminated, 
+print only new lines; 
+exit with an error if EOF before comment termination*/
 int state_reject(void)
 {
     int ch;
@@ -311,7 +340,9 @@ int state_reject(void)
     return 0;
 
 }
-
+/*Get next char in input.
+In comment state, unless exited by /.
+Exit with error if EOF before comment terminated*/
 int state_aster(void)
 {
     int ch;
@@ -349,33 +380,5 @@ int state_aster(void)
     }
     return 0;
 
-
-}
-
-int state_line_dquote(void)
-{
-    int ch;
-    /*printf("line_dquote() ");*/
-    ch = getchar();
-    if (ch == '\n')
-    {
-        error_line=error_line+1;
-    }
-    printf("\n");
-    if (ch != EOF)
-    {
-    switch(ch)
-    {
-        case '\n':
-            printf("\n");
-            state_line_dquote();
-            break;
-        default:
-            putchar(ch);
-            state_double_quote();
-            break;  
-    }
-}
-    return 0;
 
 }
