@@ -233,12 +233,13 @@ int escape_squoted(void)
 {
     int ch;
     printf("\\");
+    
+    /*printf("escape_squoted() ");*/
+    ch = getchar();
     if (ch == '\n')
     {
         error_line=error_line+1;
     }
-    /*printf("escape_squoted() ");*/
-    ch = getchar();
     if (ch != EOF){
     switch(ch)
     {
@@ -302,12 +303,13 @@ int state_reject(void)
 int state_aster(void)
 {
     int ch;
+    
+    /*printf("aster() ");*/
+    ch = getchar();
     if (ch == '\n')
     {
         error_line=error_line+1;
     }
-    /*printf("aster() ");*/
-    ch = getchar();
     if (ch != EOF)
     {
     switch(ch)
