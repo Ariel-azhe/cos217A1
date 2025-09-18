@@ -40,9 +40,6 @@ int main(void)
                 printf("\'");
                 state_single_quote();
                 break;
-            case '\n':
-                state_line_acc();
-                break;
             default:
                 putchar(ch);
                 main();
@@ -238,28 +235,6 @@ int escape_squoted(void)
 }
 
 
-int state_line_acc(void)
-{
-    int ch;
-    ch = getchar();
-    if (ch != EOF){
-    switch(ch)
-    {
-        case '\n':
-            /*printf("ch is: %c",ch);*/
-            printf("\n");
-            state_line_acc();
-            break;
-        default:
-            printf("\n");
-            printf("%c",ch);
-            main();
-            break;  
-    }
-}
-    return 0;
-
-}
 
 int state_reject(void)
 {
