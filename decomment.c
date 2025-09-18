@@ -12,6 +12,10 @@ int state_line_dquote(void);
 int state_line_squote(void);
 int slash_dquote(void);
 int slash_squote(void);
+int escape_dquoted(void);
+int state_escape_slash(void);
+int escape_squoted(void);
+
 
 int error_line = 0;
 /*int comment_line = 0;*/
@@ -89,7 +93,7 @@ int state_left_slash(void)
 
 int state_escape_slash(void)
 {
-    print("\\");
+    printf("\\");
     /*printf("state_left_slash() ");*/
     int ch;
     ch = getchar();
@@ -118,7 +122,7 @@ int state_escape_slash(void)
 
 int escape_dquoted(void)
 {
-    print("\\");
+    printf("\\");
     /*printf("state_left_slash() ");*/
     int ch;
     ch = getchar();
@@ -199,12 +203,14 @@ int state_single_quote(void)
             state_single_quote();
             break;  
     }
-    return 0;
 }
+return 0;
+
 }
+
 int escape_squoted(void)
 {
-    print("\\");
+    printf("\\");
     /*printf("state_left_slash() ");*/
     int ch;
     ch = getchar();
