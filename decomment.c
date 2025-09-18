@@ -21,8 +21,14 @@ int comment_start = 0;
 
 int main(void)
 {
+    start_state();
+    return 0;
+}
+
+int start_state(void)
+{
     int ch;
-    /*printf("main() ");*/
+    /*printf("start_state() ");*/
     ch = getchar();
     if (ch == '\n')
     {
@@ -47,7 +53,7 @@ int main(void)
                 break;
             default:
                 putchar(ch);
-                main();
+                start_state();
                 break;
         }
     }
@@ -90,12 +96,12 @@ int state_left_slash(void)
         case '\n':
             printf("/");
             printf("\n");
-            main();
+            start_state();
             break;
         default:
             printf("/");
             printf("%c",ch);
-            main();
+            start_state();
             break;  
     }
 
@@ -123,18 +129,18 @@ int state_escape_slash(void)
     {
         case '\'':
             printf("\'");
-            main();
+            start_state();
             break;
         case '\"':
             printf("\"");
-            main();
+            start_state();
             break;
         case '\\':
             printf("\\");
-            main();
+            start_state();
             break;
         default:
-            main();
+            start_state();
             break;  
     }
 }
@@ -190,7 +196,7 @@ int state_double_quote(void)
     {
         case '\"':
             printf("\"");
-            main();
+            start_state();
             break;
         case '\\':
             escape_dquoted();
@@ -223,7 +229,7 @@ int state_single_quote(void)
             break;
         case '\'':
             printf("\'");
-            main();
+            start_state();
             break;
         default:
             putchar(ch);
@@ -322,7 +328,7 @@ int state_aster(void)
     {
         case '/':
             /*printf("%c",ch);*/
-            main();
+            start_state();
             break;
         case '*':
             state_aster();
