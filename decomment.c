@@ -217,6 +217,7 @@ int state_single_quote(void)
             break;
         case '\n':
             putchar(ch);
+            state_single_quote();
             break;
         case '\'':
             printf("\'");
