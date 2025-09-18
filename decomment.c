@@ -5,7 +5,6 @@
 int state_left_slash(void);
 int state_double_quote(void);
 int state_single_quote(void);
-int state_line_acc(void);
 int state_reject(void);
 int state_aster(void);
 int state_line_dquote(void);
@@ -74,8 +73,7 @@ int state_left_slash(void)
             printf("\'");
             break;
         case '\n':
-            printf("//");
-            state_line_acc();
+            printf("//\n");
             break;
         default:
             printf("//");
